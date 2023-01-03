@@ -1,0 +1,83 @@
+<configuration>
+
+    <property name="LOGS" value="./logs" />
+
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="RollingFile"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOGS}/spring-boot-info-logger.log</file>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>INFO</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <encoder
+                class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <!--<Pattern>%d %p %C{1.} [%t] %m%n</Pattern>-->
+            <Pattern>
+               %d %p %C{1.} [%t] %m%n
+            </Pattern>
+        </encoder>
+
+        <rollingPolicy
+                class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- rollover daily and when the file reaches 10 MegaBytes -->
+            <fileNamePattern>
+                ${LOGS}/archived/spring-boot-info-logger-%d{yyyy-MM-dd}.%i.log.
+            </fileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy
+                    class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>50KB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+            <!--one day of history. Adjust accordingly-->
+            <maxHistory>1</maxHistory>
+        </rollingPolicy>
+    </appender>
+
+    <appender name="RollingFileError"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOGS}/spring-boot-error-logger.log</file>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <encoder
+                class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <!--<Pattern>%d %p %C{1.} [%t] %m%n</Pattern>-->
+            <Pattern>
+               %d %p %C{1.} [%t] %m%n
+            </Pattern>
+        </encoder>
+
+        <rollingPolicy
+                class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- rollover daily and when the file reaches 10 MegaBytes -->
+            <fileNamePattern>
+                ${LOGS}/archived/spring-boot-error-logger-%d{yyyy-MM-dd}.%i.log.
+            </fileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy
+                    class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>50KB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+            <!--one day of history. Adjust accordingly-->
+            <maxHistory>1</maxHistory>
+        </rollingPolicy>
+    </appender>
+
+    <root level="debug">
+        <appender-ref ref="console" />
+    </root>
+
+    <logger name="com.ayush.logbackdemo" level="INFO" >
+        <appender-ref ref="RollingFile" />
+        <appender-ref ref="RollingFileError" />
+    </logger>
+
+
+</configuration>

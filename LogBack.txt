@@ -1,0 +1,12 @@
+Logger : Gather logging information from code
+Appender: Publish information that has been logged
+
+Pattern Identifier:
+%d : date of logging event
+%p : Logging Policy
+%C : class name that is doing the logging
+%t: thread that is doing the logging
+%m: message supplied for logging
+%n: operating system line break
+
+
